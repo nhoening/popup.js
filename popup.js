@@ -9,17 +9,27 @@
     --------------------------------------------------------------------------
 */
 
+/***************
+ * anderson edit 
+ * usage:  <a onmouseover="popupVars.setReady(true);popup('Lorem ipsum dolor sit ...');" onmouseout="popupVars.setReady(false);" href='somewhere.html'>some text</a>
+ ***************/
 
-var minMargin = 15; // set how much minimal space there should be (in pixels)
-                    // between the popup and everything else (borders, mouse)
-var ready = false;  // we are ready when the mouse event is set up
-var default_width = 200; // will be set to width from css in document.ready
+popupVars = {};
+popupVars.minMargin = 15; // set how much minimal space there should be (in pixels)
+// between the popup and everything else (borders, mouse)
+popupVars.ready = false; // we are ready when the mouse event is set up
+popupVars.default_width = 200; // will be set to width from css in document.ready
+
+// activate or deactivate the move hoverover
+popupVars.setReady = function(p_bool){
+if (typeof p_bool === "boolean"){ popupVars.ready = p_bool; }
+}
 
 /* Prepare popup and define the mouseover callback */
 jQuery(document).ready(function(){
     $('body').append('<div id="pup" style="position:abolute; display:none; z-index:200;"></div>');
     css_width = $('#pup').width();
-    if (css_width != 0) default_width = css_width;
+    if (css_width != 0) popupVars.default_width = css_width;
     // set dynamic coords when the mouse moves
     $(document).mousemove(function(e){ 
         var x,y;
@@ -29,13 +39,15 @@ jQuery(document).ready(function(){
 
         x += 10; // important: if the popup is where the mouse is, the hoverOver/hoverOut events flicker
       
+        if (popupVars.popupVars.ready){
         var x_y = nudge(x,y); // avoids edge overflow
-      
-        // remember: the popup is still hidden
-        $('#pup').css('top', x_y[1] + 'px');
-        $('#pup').css('left', x_y[0] + 'px');
+
+			// remember: the popup is still hidden
+			$('#pup').css('top', x_y[1] + 'px');
+			$('#pup').css('left', x_y[0] + 'px');
+		}
     });
-    ready = true;
+    //ready = true;
 });
 
 /*
@@ -45,10 +57,10 @@ jQuery(document).ready(function(){
 */
 function popup(msg, width)
 {
-    if (ready) {
+    if (popupVars.ready) {
         // use default width if not customized here
         if (typeof width === "undefined"){
-            width = default_width;
+            width = popupVars.default_width;
         }
         // write content and display
         $('#pup').html(msg).width(width).show();
@@ -58,7 +70,7 @@ function popup(msg, width)
         var t = getTarget(arguments.callee.caller.arguments[0]);
         $(t).unbind('mouseout').bind('mouseout', 
             function(e){
-                $('#pup').hide().width(default_width);
+                $('#pup').hide().width(popupVars.default_width);
             }
         );
     }
@@ -70,15 +82,15 @@ function nudge(x,y)
     var win = $(window);
     
     // When the mouse is too far on the right, put window to the left
-    var xtreme = $(document).scrollLeft() + win.width() - $('#pup').width() - minMargin;
+    var xtreme = $(document).scrollLeft() + win.width() - $('#pup').width() - popupVars.minMargin;
     if(x > xtreme) {
-        x -= $('#pup').width() + 2 * minMargin;
+        x -= $('#pup').width() + 2 * popupVars.minMargin;
     }
     x = max(x, 0);
 
     // When the mouse is too far down, move window up
     if((y + $('#pup').height()) > (win.height() +  $(document).scrollTop())) {
-        y -= $('#pup').height() + minMargin;
+        y -= $('#pup').height() + popupVars.minMargin;
     }
 
     return [ x, y ];
