@@ -1,0 +1,34 @@
+<!doctype html>
+<html class="" lang="en"> 
+    <head>
+        <meta charset="utf-8" />
+        <title>Test nhpup.js</title>	
+        <link rel="stylesheet" href="style.css" />
+        <script type="text/javascript" src="jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="../popup.js"></script>
+    </head>
+    <body>
+        <div class="testpup" onmouseover="nhpup.popup('A default popup ...');">
+            hover over me
+        </div>
+        <div class="testpup"
+             onmouseover="nhpup.popup('This has CSS class pup_class2 ...',
+                                      {'class': 'pup_class2'});">
+            hover over me
+        </div>
+        <div class="testpup"
+             onmouseover="nhpup.popup('This has CSS class pup_class3 and a distinct width of 400px ...',
+                                      {'class': 'pup_class3', 'width': 400});">
+            hover over me
+        </div>
+        <div class="testpup" id="rather_wide"
+             onmouseover="nhpup.popup('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ut arcu magna. Donec lectus turpis, aliquet ut iaculis quis, dignissim sed lacus. Praesent porta mi a lorem ultricies ac pretium ligula ultricies. Sed vitae libero ut tellus scelerisque posuere eu vitae est. Suspendisse convallis nisl ut erat aliquet id pellentesque diam ullamcorper. Proin dapibus placerat erat, ac porttitor lacus tristique sit amet. Nulla nisl purus, sollicitudin vitae egestas at, ultricies vel elit. Praesent feugiat purus et turpis commodo eget ullamcorper enim rhoncus. Curabitur sed nisl et libero interdum mollis a non odio. Fusce libero mauris, lacinia id viverra eget, malesuada sed risus. Sed ut tempus libero.', {'width': 700});">
+            hover over me (this is gonna be big, though)
+        </div>
+        <div class="testpup" id="rather_tall"
+             onmouseover="nhpup.popup('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ut arcu magna. Donec lectus turpis, aliquet ut iaculis quis, dignissim sed lacus. Praesent porta mi a lorem ultricies ac pretium ligula ultricies. Sed vitae libero ut tellus scelerisque posuere eu vitae est. Suspendisse convallis nisl ut erat aliquet id pellentesque diam ullamcorper. Proin dapibus placerat erat, ac porttitor lacus tristique sit amet. Nulla nisl purus, sollicitudin vitae egestas at, ultricies vel elit. Praesent feugiat purus et turpis commodo eget ullamcorper enim rhoncus. Curabitur sed nisl et libero interdum mollis a non odio. Fusce libero mauris, lacinia id viverra eget, malesuada sed risus. Sed ut tempus libero.', {'width': 300});">
+            hover over me (this is gonna be big, though)
+        </div>
+
+    </body>
+</html>  
