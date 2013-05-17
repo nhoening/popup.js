@@ -15,39 +15,20 @@ nhpup = {
     pup: null,      // This is out popup box, represented by a div    
     identifier: "pup",  // Name of ID and class of the popup box
     minMargin: 15,  // Set how much minimal space there should be (in pixels)
-	            // between the popup and everything else (borders, mouse)
+                    // between the popup and everything else (borders, mouse)
     default_width: 200, // Will be set to width from css in document.ready
     move: false,   // Move it around with the mouse? we are only ready for that when the mouse event is set up.
                    // Besides, having this turned off intially is resource-friendly.
 
-    // read the current mouse position when mouse movement even occurs
-    readMousePos: function(e)
-    {
-        var x,y;
-        x = $(document).scrollLeft() + e.pageX;
-        y = $(document).scrollTop() + e.pageY;
-        return ([x,y]);
-    },
-
-    // set the target element position
-    setElementPos: function(p_xyArr)
-    {
-        // Call nudge to avoid edge overflow. Important tweak: x+10, because if
-        //  the popup is where the mouse is, the hoverOver/hoverOut events flicker
-        var x_y = this.nudge(p_xyArr[0] + 10, p_xyArr[1]);
-        // remember: the popup is still hidden
-        this.pup.css('top', x_y[1] + 'px')
-                .css('left', x_y[0] + 'px');
-    },
-
     /*
-     The actual callback:
      Write message, show popup w/ custom width if necessary,
       make sure it disappears on mouseout
     */
     popup: function(p_msg, p_config)
     {
-        this.move = true;  // do track mouse moves and update position 
+        // do track mouse moves and update position 
+        this.move = true;
+        // restore defaults
         this.pup.removeClass()
                 .addClass(this.identifier)
                 .width(this.default_width);
@@ -78,11 +59,22 @@ nhpup = {
         );
     },
 
+    // set the target element position
+    setElementPos: function(x, y)
+    {
+        // Call nudge to avoid edge overflow. Important tweak: x+10, because if
+        //  the popup is where the mouse is, the hoverOver/hoverOut events flicker
+        var x_y = this.nudge(x + 10, y);
+        // remember: the popup is still hidden
+        this.pup.css('top', x_y[1] + 'px')
+                .css('left', x_y[0] + 'px');
+    },
+
     /* Avoid edge overflow */
     nudge: function(x,y)
     {
         var win = $(window);
-        
+
         // When the mouse is too far on the right, put window to the left
         var xtreme = $(document).scrollLeft() + win.width() - this.pup.width() - this.minMargin;
         if(x > xtreme) {
@@ -128,11 +120,11 @@ jQuery(document).ready(function(){
     // create default popup on the page    
     $('body').append('<div id="' + nhpup.identifier + '" class="' + nhpup.identifier + '" style="position:abolute; display:none; z-index:200;"></div>');
     nhpup.pup = $('#' + nhpup.identifier);
-    
+
     // set dynamic coords when the mouse moves
     $(document).mousemove(function(e){ 
         if (nhpup.move){
-            nhpup.setElementPos(nhpup.readMousePos(e));
+            nhpup.setElementPos(e.pageX, e.pageY);
         }
     });
 });
