@@ -169,6 +169,7 @@ HoningPopup.prototype = {
 			// make sure popup goes away on mouse out
 			$(p_obj.bind).one("mouseout", function(){
 				popupElement.hide().width(that.default_width);
+				that.setReady(false);
 			})
 
 		}   
