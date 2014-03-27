@@ -134,8 +134,13 @@ nhpup = {
         if (targ.nodeType == 3) // defeat Safari bug
             targ = targ.parentNode;
         return targ;
-    }
+    },
 
+    onTouchDevice: function() 
+    {
+        var deviceAgent = navigator.userAgent.toLowerCase();
+        return deviceAgent.match(/(iphone|ipod|ipad|android|blackberry|iemobile|opera m(ob|in)i|vodafone)/) !== null;
+    }
 };
 
 
@@ -147,8 +152,10 @@ jQuery(document).ready(function(){
 
     // set dynamic coords when the mouse moves
     $jq(document).mousemove(function(e){ 
-        if (nhpup.move){
-            nhpup.setElementPos(e.pageX, e.pageY);
+        if (!nhpup.onTouchDevice()) { // turn off constant repositioning for touch devices (no use for this anyway)
+            if (nhpup.move){
+                nhpup.setElementPos(e.pageX, e.pageY);
+            }
         }
     });
 });
