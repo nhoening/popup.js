@@ -32,6 +32,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+var $jq = jQuery; // this is safe in WP installations with noConflict mode (which is default)
 
 nhpup = {
 
@@ -74,7 +75,7 @@ nhpup = {
         // The event obj needs to be gotten from the virtual 
         //  caller, since we use onmouseover='nhpup.popup(p_msg)' 
         var t = this.getTarget(arguments.callee.caller.arguments[0]);
-        $(t).unbind('mouseout').bind('mouseout', 
+        $jq(t).unbind('mouseout').bind('mouseout', 
             function(e){
                 nhpup.pup.hide();
                 nhpup.move = false;
@@ -96,17 +97,17 @@ nhpup = {
     /* Avoid edge overflow */
     nudge: function(x,y)
     {
-        var win = $(window);
+        var win = $jq(window);
 
         // When the mouse is too far on the right, put window to the left
-        var xtreme = $(document).scrollLeft() + win.width() - this.pup.width() - this.minMargin;
+        var xtreme = $jq(document).scrollLeft() + win.width() - this.pup.width() - this.minMargin;
         if(x > xtreme) {
             x -= this.pup.width() + 2 * this.minMargin;
         }
         x = this.max(x, 0);
 
         // When the mouse is too far down, move window up
-        if((y + this.pup.height()) > (win.height() +  $(document).scrollTop())) {
+        if((y + this.pup.height()) > (win.height() +  $jq(document).scrollTop())) {
             y -= this.pup.height() + this.minMargin;
         }
 
@@ -141,11 +142,11 @@ nhpup = {
 /* Prepare popup and define the mouseover callback */
 jQuery(document).ready(function(){
     // create default popup on the page    
-    $('body').append('<div id="' + nhpup.identifier + '" class="' + nhpup.identifier + '" style="position:abolute; display:none; z-index:200;"></div>');
-    nhpup.pup = $('#' + nhpup.identifier);
+    $jq('body').append('<div id="' + nhpup.identifier + '" class="' + nhpup.identifier + '" style="position:abolute; display:none; z-index:200;"></div>');
+    nhpup.pup = $jq('#' + nhpup.identifier);
 
     // set dynamic coords when the mouse moves
-    $(document).mousemove(function(e){ 
+    $jq(document).mousemove(function(e){ 
         if (nhpup.move){
             nhpup.setElementPos(e.pageX, e.pageY);
         }
