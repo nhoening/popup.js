@@ -147,7 +147,7 @@ nhpup = {
 /* Prepare popup and define the mouseover callback */
 jQuery(document).ready(function(){
     // create default popup on the page    
-    $jq('body').append('<div id="' + nhpup.identifier + '" class="' + nhpup.identifier + '" style="position:abolute; display:none; z-index:200;"></div>');
+    $jq('body').append('<div id="' + nhpup.identifier + '" class="' + nhpup.identifier + '" style="position:absolute; display:none; z-index:200;"></div>');
     nhpup.pup = $jq('#' + nhpup.identifier);
 
     // set dynamic coords when the mouse moves
