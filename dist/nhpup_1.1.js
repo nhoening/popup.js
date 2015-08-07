@@ -141,30 +141,30 @@ nhpup = {
         return deviceAgent.match(/(iphone|ipod|ipad|android|blackberry|iemobile|opera m(ob|in)i|vodafone)/) !== null;
     },
 	
-	initialized: false,
-	initialize : function(){
-		if (this.initialized) return;
-		
-		window.$jq = jQuery; // this is safe in WP installations with noConflict mode (which is default)
-		
-		/* Prepare popup and define the mouseover callback */
-		jQuery(document).ready(function () {
-			// create default popup on the page
-			$jq('body').append('<div id="' + nhpup.identifier + '" class="' + nhpup.identifier + '" style="position:absolute; display:none; z-index:200;"></div>');
-			nhpup.pup = $jq('#' + nhpup.identifier);
+    initialized: false,
+    initialize : function(){
+        if (this.initialized) return;
 
-			// set dynamic coords when the mouse moves
-			$jq(document).mousemove(function (e) {
-				if (!nhpup.onTouchDevice()) { // turn off constant repositioning for touch devices (no use for this anyway)
-					if (nhpup.move) {
-						nhpup.setElementPos(e.pageX, e.pageY);
-					}
-				}
-			});
-		});
-		
-		this.initialized = true;
-	}
+        window.$jq = jQuery; // this is safe in WP installations with noConflict mode (which is default)
+
+        /* Prepare popup and define the mouseover callback */
+        jQuery(document).ready(function () {
+            // create default popup on the page
+            $jq('body').append('<div id="' + nhpup.identifier + '" class="' + nhpup.identifier + '" style="position:absolute; display:none; z-index:200;"></div>');
+            nhpup.pup = $jq('#' + nhpup.identifier);
+
+            // set dynamic coords when the mouse moves
+            $jq(document).mousemove(function (e) {
+                if (!nhpup.onTouchDevice()) { // turn off constant repositioning for touch devices (no use for this anyway)
+                    if (nhpup.move) {
+                        nhpup.setElementPos(e.pageX, e.pageY);
+                    }
+                }
+            });
+        });
+
+        this.initialized = true;
+    }
 };
 
 if ('jQuery' in window) nhpup.initialize();
